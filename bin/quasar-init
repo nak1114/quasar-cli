@@ -57,8 +57,13 @@ function create (template, dest) {
       log.warning('Destination folder ' + dest.gray + ' already exists, but is empty. Continuing....')
     }
     else {
-      log.fatal('Destination folder ' + dest.gray + ' already exists and is not empty.')
-      // ^^^ EARLY EXIT
+      if (__dirname != qfs.join(dest, 'node_modules', 'quasar-cli', 'bin') || qfs.exists(qfs.join(dest, 'package.json'))) {
+        log.fatal('Destination folder ' + dest.gray + ' already exists and is not empty.')
+        // ^^^ EARLY EXIT
+      }
+      else {
+        log.warning('Destination folder ' + dest.gray + ' already exists, but is only node_modules. Continuing....')
+      }
     }
   }
 
